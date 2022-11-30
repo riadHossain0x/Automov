@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Automov.Enums;
+using Automov.Interfaces;
 
-namespace Automov.Logger
+namespace Automov.Loggers
 {
     public class ConsoleLogger : ILogger
     {
@@ -31,7 +28,7 @@ namespace Automov.Logger
             }
 
             Console.ForegroundColor = color;
-            Console.Write($"{type.ToString()}:");
+            Console.Write($"{type.ToString()}: ");
             Console.ResetColor();
             Console.WriteLine(message);
         }

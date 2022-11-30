@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Automov.Logger;
+using Automov.Enums;
+using Automov.Interfaces;
 
 namespace Automov.Exceptions
 {

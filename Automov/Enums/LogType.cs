@@ -1,4 +1,4 @@
-﻿namespace Automov.Logger
+﻿namespace Automov.Enums
 {
     public enum LogType
     {

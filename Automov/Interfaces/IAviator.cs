@@ -1,4 +1,4 @@
-﻿namespace Automov
+﻿namespace Automov.Interfaces
 {
     public interface IAviator
     {

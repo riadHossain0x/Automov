@@ -1,5 +1,6 @@
-﻿using Automov.Exceptions;
-using Automov.Logger;
+﻿using Automov.Enums;
+using Automov.Exceptions;
+using Automov.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
@@ -18,22 +19,34 @@ namespace Automov
             _delayTime = delayTime;
         }
 
-        public void Operative(string navigateURL, List<ISegment> segments)
+        public virtual bool DoBefore() => true;
+        public virtual bool DoAfter() => true;
+
+        public void Operative(string navigateURL, List<IValueSegment> valueSegments)
         {
             Navigate(navigateURL);
 
-            foreach (var segment in segments)
+            DoBefore();
+
+            foreach (var segment in valueSegments)
             {
                 var element = GetWebElement(segment);
 
                 SetElementValue(element, segment);
             }
+
+            DoAfter();
+        }
+
+        public void TakeOff(IActionSegment actionSegment)
+        {
+
         }
 
         #region Helper
         private void Navigate(string url)
         {
-            _logger.Write($"Navigating - {url}", Logger.LogType.info);
+            _logger.Write($"Navigating - {url}", Enums.LogType.info);
 
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
@@ -41,9 +54,9 @@ namespace Automov
             Thread.Sleep(_delayTime);
         }
 
-        private void SetElementValue(IWebElement webElement, ISegment segment)
+        private void SetElementValue(IWebElement webElement, IValueSegment segment)
         {
-            _logger.Write($"Set foot in '{segment.Text}' element for value '{segment.Value}'", Logger.LogType.info);
+            _logger.Write($"Set foot in '{segment.SelectorText}' element for value '{segment.Value}'", Enums.LogType.info);
 
             switch (segment.InputType)
             {
@@ -67,35 +80,35 @@ namespace Automov
             Thread.Sleep(_delayTime);
         }
 
-        private IWebElement GetWebElement(ISegment segment)
+        private IWebElement GetWebElement(IValueSegment segment)
         {
             IWebElement element = null!;
 
             switch (segment.SelectorType)
             {
                 case SelectorType.Id:
-                    element = IsElementPresent(By.Id(segment.Text), segment.Text);
+                    element = IsElementPresent(By.Id(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.LinkText:
-                    element = IsElementPresent(By.LinkText(segment.Text), segment.Text);
+                    element = IsElementPresent(By.LinkText(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.Name:
-                    element = IsElementPresent(By.Name(segment.Text), segment.Text);
+                    element = IsElementPresent(By.Name(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.XPath:
-                    element = IsElementPresent(By.XPath(segment.Text), segment.Text);
+                    element = IsElementPresent(By.XPath(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.ClassName:
-                    element = IsElementPresent(By.ClassName(segment.Text), segment.Text);
+                    element = IsElementPresent(By.ClassName(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.PartialLinkText:
-                    element = IsElementPresent(By.PartialLinkText(segment.Text), segment.Text);
+                    element = IsElementPresent(By.PartialLinkText(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.TagName:
-                    element = IsElementPresent(By.TagName(segment.Text), segment.Text);
+                    element = IsElementPresent(By.TagName(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.CssSelector:
-                    element = IsElementPresent(By.CssSelector(segment.Text), segment.Text);
+                    element = IsElementPresent(By.CssSelector(segment.SelectorText), segment.SelectorText);
                     break;
                 default:
                     throw new NotImplementedException();
@@ -109,7 +122,7 @@ namespace Automov
             if (string.IsNullOrEmpty(text))
                 throw new Exceptions.NotFoundException(_logger, "element can not be null");
 
-            _logger.Write($"Checking element '{text}'", Logger.LogType.info);
+            _logger.Write($"Checking element '{text}'", Enums.LogType.info);
 
             IWebElement element = null!;
 

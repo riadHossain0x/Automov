@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Automov;
-using Automov.Logger;
+using Automov.Enums;
+using Automov.Interfaces;
+using Automov.Loggers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Practice;
@@ -13,18 +15,18 @@ using Practice;
 IWebDriver webDriver = new ChromeDriver();
 ILogger logger = new ConsoleLogger();
 
-var list = new List<ISegment>()
+var list = new List<IValueSegment>()
 {
-    new Segment
+    new ValueSegment
     {
-        Text = "Email",
+        SelectorText = "Email",
         Value = "admin",
         InputType = InputType.Textbox,
         SelectorType = SelectorType.Id
     },
-    new Segment
+    new ValueSegment
     {
-        Text = "Password",
+        SelectorText = "Password",
         Value = "riad",
         InputType = InputType.Textbox,
         SelectorType = SelectorType.Id
