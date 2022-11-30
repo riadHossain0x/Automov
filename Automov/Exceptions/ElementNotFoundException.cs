@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Automov.Logger;
+using Automov_Pilot.Logger;
 
-namespace Automov.Exceptions
+namespace Automov_Pilot.Exceptions
 {
     public class ElementNotFoundException : Exception
     {

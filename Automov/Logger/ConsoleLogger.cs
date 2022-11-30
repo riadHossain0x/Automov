@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Automov.Logger
+namespace Automov_Pilot.Logger
 {
     public class ConsoleLogger : ILogger
     {

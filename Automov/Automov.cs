@@ -1,9 +1,9 @@
-﻿using Automov.Exceptions;
-using Automov.Logger;
+﻿using Automov_Pilot.Exceptions;
+using Automov_Pilot.Logger;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace Automov
+namespace Automov_Pilot
 {
     public class Automov : IAutomov
     {
@@ -20,10 +20,10 @@ namespace Automov
 
         public void Operative(string navigateURL, List<ISegment> segments)
         {
+            Navigate(navigateURL);
+
             foreach (var segment in segments)
             {
-                Navigate(navigateURL);
-
                 var element = GetWebElement(segment);
 
                 SetElementValue(element, segment);
