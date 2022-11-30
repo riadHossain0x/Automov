@@ -9,7 +9,7 @@ namespace Automov
 {
     internal static class ValueObject
     {
-        private static bool IsElementPresent(IWebDriver driver, By by)
+        public static bool IsElementPresent(IWebDriver driver, By by)
         {
             try
             {
