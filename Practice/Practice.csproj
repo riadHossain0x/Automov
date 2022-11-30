@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Automov\Automov_Pilot.csproj" />
+    <ProjectReference Include="..\Automov\Automov.csproj" />
   </ItemGroup>
 
 </Project>

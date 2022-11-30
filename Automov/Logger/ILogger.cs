@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Automov_Pilot.Logger
+namespace Automov.Logger
 {
     public interface ILogger
     {

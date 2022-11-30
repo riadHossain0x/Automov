@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Automov_Pilot.Logger;
+using Automov.Logger;
 
-namespace Automov_Pilot.Exceptions
+namespace Automov.Exceptions
 {
     public class NotFoundException : Exception
     {

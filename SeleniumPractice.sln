@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice", "Practice\Practice.csproj", "{35A7FEF5-A785-4E28-BE8F-2AA28D32EA29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automov_Pilot", "Automov\Automov_Pilot.csproj", "{12314104-93CC-4C4F-B129-D215FA6C3924}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automov", "Automov\Automov.csproj", "{12314104-93CC-4C4F-B129-D215FA6C3924}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

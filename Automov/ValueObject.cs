@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace Automov_Pilot
+namespace Automov
 {
     internal static class ValueObject
     {

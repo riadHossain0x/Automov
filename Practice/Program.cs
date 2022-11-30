@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using Automov_Pilot;
-using Automov_Pilot.Logger;
+using Automov;
+using Automov.Logger;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Practice;
@@ -31,5 +31,5 @@ var list = new List<ISegment>()
     }
 };
 
-var automov = new Automov(webDriver, logger, 200);
+var automov = new Aviator(webDriver, logger, 200);
 automov.Operative("http://localhost:5001/Account/Login", list);

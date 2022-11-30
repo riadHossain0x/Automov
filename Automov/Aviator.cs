@@ -1,9 +1,9 @@
-﻿using Automov_Pilot.Exceptions;
-using Automov_Pilot.Logger;
+﻿using Automov.Exceptions;
+using Automov.Logger;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace Automov_Pilot
+namespace Automov
 {
     public class Automov : IAutomov
     {
