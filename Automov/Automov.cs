@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Automov
 {
@@ -15,10 +10,12 @@ namespace Automov
     public class Automov : IAutomov
     {
         private readonly IWebDriver _driver;
+        private readonly ILogger _logger;
 
-        public Automov(IWebDriver driver)
+        public Automov(IWebDriver driver, ILogger logger)
         {
             _driver = driver;
+            _logger = logger;
         }
 
         public void Operative(string navigateURL, List<ISegment> segments)
