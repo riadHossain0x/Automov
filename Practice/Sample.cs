@@ -34,6 +34,8 @@ namespace Practice
 
             if(IsElementPresent(By.ClassName("validation-summary-errors")))
                 throw new InvalidOperationException("Failed to login.");
+
+           
         }
 
         public void Class_Operative(string className)

@@ -1,24 +1,21 @@
 ﻿using Automov.Exceptions;
+using Automov.Logger;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using System.Xml.Linq;
 
 namespace Automov
 {
-    public interface IAutomov
-    {
-
-    }
-
     public class Automov : IAutomov
     {
         private readonly IWebDriver _driver = null!;
         private readonly ILogger _logger = null!;
+        private readonly int _delayTime;
 
-        public Automov(IWebDriver driver, ILogger logger)
+        public Automov(IWebDriver driver, ILogger logger, int delayTime)
         {
             _driver = driver;
             _logger = logger;
+            _delayTime = delayTime;
         }
 
         public void Operative(string navigateURL, List<ISegment> segments)
@@ -36,12 +33,18 @@ namespace Automov
         #region Helper
         private void Navigate(string url)
         {
+            _logger.Write($"Navigating - {url}", Logger.LogType.info);
+
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
+
+            Thread.Sleep(_delayTime);
         }
 
-        public void SetElementValue(IWebElement webElement, ISegment segment)
+        private void SetElementValue(IWebElement webElement, ISegment segment)
         {
+            _logger.Write($"Set foot in '{segment.Text}' element for value '{segment.Value}'", Logger.LogType.info);
+
             switch (segment.InputType)
             {
                 case InputType.Textbox:
@@ -60,9 +63,11 @@ namespace Automov
                 default:
                     throw new NotImplementedException();
             }
+
+            Thread.Sleep(_delayTime);
         }
 
-        public IWebElement GetWebElement(ISegment segment)
+        private IWebElement GetWebElement(ISegment segment)
         {
             IWebElement element = null!;
 
@@ -101,17 +106,20 @@ namespace Automov
 
         private IWebElement IsElementPresent(By by, string? text)
         {
-            IWebElement element = null!;
-
             if (string.IsNullOrEmpty(text))
-                throw new InvalidOperationException("'text' can not be null");
+                throw new Exceptions.NotFoundException(_logger, "element can not be null");
+
+            _logger.Write($"Checking element '{text}'", Logger.LogType.info);
+
+            IWebElement element = null!;
 
             if (ValueObject.IsElementPresent(_driver, by))
             {
                 element = _driver.FindElement(by);
             }else
-                throw new ElementNotFoundException($"'{text}' element not found");
+                throw new ElementNotFoundException(_logger, $"'{text}' element not found");
 
+            Thread.Sleep(_delayTime);
             return element;
         }
         #endregion

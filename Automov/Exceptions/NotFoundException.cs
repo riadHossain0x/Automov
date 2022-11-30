@@ -7,11 +7,11 @@ using Automov.Logger;
 
 namespace Automov.Exceptions
 {
-    public class ElementNotFoundException : Exception
+    public class NotFoundException : Exception
     {
         private readonly ILogger _logger;
 
-        public ElementNotFoundException(ILogger logger, string message) : base(message)
+        public NotFoundException(ILogger logger, string message) : base(message)
         {
             _logger = logger;
             _logger.Write(message, LogType.Error);

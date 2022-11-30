@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Automov
+namespace Automov.Logger
 {
     public interface ILogger
     {
-        void Write(string message);
+        void Write(string message, LogType type);
     }
 }
