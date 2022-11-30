@@ -5,13 +5,13 @@ using OpenQA.Selenium.Support.UI;
 
 namespace Automov
 {
-    public class Automov : IAutomov
+    public class Aviator : IAviator
     {
         private readonly IWebDriver _driver = null!;
         private readonly ILogger _logger = null!;
         private readonly int _delayTime;
 
-        public Automov(IWebDriver driver, ILogger logger, int delayTime)
+        public Aviator(IWebDriver driver, ILogger logger, int delayTime)
         {
             _driver = driver;
             _logger = logger;
