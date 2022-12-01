@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 
 namespace Automov.Interfaces
 {
-    public interface IHelper
+    public interface ICore
     {
         void CheckElementValue(IValueSegment valueSegment);
         void Navigate(string url);

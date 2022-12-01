@@ -12,7 +12,7 @@ namespace Automov
     {
         private readonly IWebDriver _driver = null!;
         private readonly ILogger _logger = null!;
-        private readonly IHelper _helper = null!;
+        private readonly ICore _core = null!;
         private readonly int _delayTime;
 
         public Aviator(IWebDriver driver, ILogger logger, int delayTime = 200)
@@ -20,7 +20,7 @@ namespace Automov
             _driver = driver;
             _logger = logger;
             _delayTime = delayTime;
-            _helper = new Helper(_driver, _logger, _delayTime);
+            _core = new Core(_driver, _logger, _delayTime);
         }
 
         public IWebElement Operative(IActionSegment actionSegment)
@@ -29,19 +29,37 @@ namespace Automov
             return webElement;
         }
 
+        public IWebElement Operative(List<IActionSegment> actionSegments)
+        {
+            if (actionSegments == null)
+                throw new ArgumentNullException(nameof(actionSegments));
+
+            IWebElement webElement = null!;
+
+            foreach (var action in actionSegments)
+            {
+                webElement = Operative(action);
+            }
+
+            return webElement;
+        }
+
         public IWebElement Operative(List<IValueSegment> valueSegments)
         {
+            if (valueSegments == null)
+                throw new ArgumentNullException(nameof(valueSegments));
+
             IWebElement webElement = null!;
 
             foreach (var valueSegment in valueSegments)
             {
-                webElement = _helper.GetWebElement(valueSegment);
+                webElement = _core.GetWebElement(valueSegment);
 
                 try
                 {
                     _logger.Write($"Set foot in '{valueSegment.SelectorText}' element for value '{valueSegment.Value}'", Enums.LogType.info);
 
-                    _helper.SetElementValue(webElement, valueSegment.InputType, valueSegment.Value);
+                    _core.SetElementValue(webElement, valueSegment.InputType, valueSegment.Value);
                 }
                 catch (Exception)
                 {
@@ -52,9 +70,24 @@ namespace Automov
             return webElement;
         }
 
+        public IWebElement Operative(string navigateURL, List<IValueSegment> valueSegments)
+        {
+            if (valueSegments == null)
+                throw new ArgumentNullException(nameof(valueSegments));
+
+            _core.Navigate(navigateURL);
+
+            IWebElement webElement = Operative(valueSegments);
+
+            return webElement;
+        }
+
         public IWebElement Operative(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment)
         {
-            _helper.Navigate(navigateURL);
+            if (valueSegments == null || actionSegment == null)
+                throw new ArgumentNullException(nameof(valueSegments));
+
+            _core.Navigate(navigateURL);
 
             IWebElement webElement = Operative(valueSegments);
 
@@ -65,14 +98,14 @@ namespace Automov
 
         private IWebElement Imitation(IActionSegment actionSegment)
         {
-            var element = _helper.GetWebElement(actionSegment);
+            var element = _core.GetWebElement(actionSegment);
 
             _logger.Write($"Executing action on '{actionSegment.SelectorText}'", Enums.LogType.info);
 
             element.Click();
 
-            if(actionSegment.Result != null)
-                _helper.CheckElementValue(actionSegment.Result);
+            if (actionSegment.Result != null)
+                _core.CheckElementValue(actionSegment.Result);
 
             return element;
         }

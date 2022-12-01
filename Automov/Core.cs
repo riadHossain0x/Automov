@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Automov
 {
-    public class Helper : IHelper
+    public class Core : ICore
     {
         private readonly IWebDriver _driver;
         private readonly ILogger _logger;
         private readonly int _delayTime;
 
-        public Helper(IWebDriver driver, ILogger logger, int delayTime = 200)
+        public Core(IWebDriver driver, ILogger logger, int delayTime = 200)
         {
             _driver = driver;
             _logger = logger;
@@ -61,7 +61,7 @@ namespace Automov
             }
         }
 
-        public void SetElementValue(IWebElement webElement, InputType inputType, string value)
+        public void SetElementValue(IWebElement webElement, InputType inputType, string? value)
         {
             try
             {
