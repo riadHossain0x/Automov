@@ -107,4 +107,81 @@ var stdActionSegment = new ActionSegment
 
 //automov.Operative("http://localhost:5001/sm/Subject/CreateEdit", stdValueSegment, stdActionSegment);
 
-automov.Operative("http://localhost:5001/sm/Exam/CreateEdit", stdValueSegment, stdActionSegment);
+var examValueSegment = new List<IValueSegment>()
+{
+    new ValueSegment
+    {
+        SelectorText = "AcademicClass",
+        Value = "Nine",
+        InputType = InputType.Dropdown
+    },
+    new ValueSegment
+    {
+        SelectorText = "Name",
+        Value = "Semester Final Exam",
+    },
+    new ValueSegment
+    {
+        SelectorText = "StartDate",
+        Value = "12222022",
+    },
+    new ValueSegment
+    {
+        SelectorText = "EndDate",
+        Value = "12302022",
+    },
+    new ValueSegment
+    {
+        SelectorText = "ResultPublishedDate",
+        Value = "01012023",
+    },
+    new ValueSegment // for dropdown field
+    {
+        SelectorText= "IsMultiPaperCalculation",
+        Value = "true",
+        InputType = InputType.Checkbox
+    }
+    ,
+    new ValueSegment
+    {
+        SelectorText= "IsOnlinePublish",
+        Value = "true",
+        InputType = InputType.Checkbox
+    }
+};
+
+var setMarkValueSegment = new List<IValueSegment>
+{
+    new ValueSegment
+    {
+        SelectorType = SelectorType.ClassName,
+        SelectorText = "DefaultValue",
+        InputType = InputType.Textbox,
+        Value = "100"
+    }
+};
+
+var setMarkActionSegment = new ActionSegment
+{
+    SelectorType = SelectorType.ClassName,
+    SelectorText = "DefaultValue"
+};
+
+automov.Operative("http://localhost:5001/sm/Exam/CreateEdit", examValueSegment);
+
+var showDefaultAction = new ActionSegment
+{
+    SelectorText = "ShowHideDefaultControl"
+};
+
+var submitAction = new ActionSegment
+{
+    SelectorText = "btnSubmit"
+};
+
+automov.Operative(showDefaultAction);
+automov.Operative(setMarkValueSegment);
+automov.Operative(setMarkActionSegment);
+
+
+automov.Operative(submitAction);

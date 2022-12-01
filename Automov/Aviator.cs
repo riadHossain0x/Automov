@@ -44,6 +44,18 @@ namespace Automov
             return webElement;
         }
 
+        public IWebElement Operative(string navigateURL, List<IActionSegment> actionSegments)
+        {
+            if (actionSegments == null)
+                throw new ArgumentNullException(nameof(actionSegments));
+
+            _core.Navigate(navigateURL);
+
+            var webElement = Operative(actionSegments);
+
+            return webElement;
+        }
+
         public IWebElement Operative(List<IValueSegment> valueSegments)
         {
             if (valueSegments == null)
