@@ -12,7 +12,7 @@ namespace Automov
     {
         public string? SelectorText { get; set; }
         public SelectorType SelectorType { get; set; }
-        public IValueSegment? Result { get; set; }
+        public IValueSegment Result { get; set; } = null!;
     }
 
     //public class Result

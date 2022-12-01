@@ -40,7 +40,12 @@ namespace Automov
         public void TakeOff(IActionSegment actionSegment)
         {
             var element = GetWebElement(actionSegment);
+
+            _logger.Write($"Performing action on '{actionSegment.SelectorText}'", Enums.LogType.info);
+
             element.Click();
+
+            CheckElementValue(actionSegment.Result);
         }
 
         #region Helper
@@ -55,6 +60,24 @@ namespace Automov
             _driver.Manage().Window.Maximize();
 
             Thread.Sleep(_delayTime);
+        }
+
+        private string CheckElementValue(IValueSegment valueSegment)
+        {
+            if(string.IsNullOrEmpty(valueSegment.Value))
+                throw new Exceptions.NotFoundException(_logger, nameof(valueSegment.Value));
+
+            _logger.Write($"Checking given result '{valueSegment.Value}'", Enums.LogType.info);
+
+            var element = GetWebElement(valueSegment);
+
+            if (element.Text.Contains(valueSegment.Value))
+            {
+                _logger.Write($"Given '{valueSegment.Value}' result found", Enums.LogType.Success);
+                return element.Text;
+            }
+
+            throw new Exceptions.NotFoundException(_logger, $"Given '{valueSegment.Value}' result not found! System returns - '{element.Text}'");
         }
 
         private void SetElementValue(IWebElement webElement, IValueSegment segment)

@@ -30,7 +30,7 @@ namespace Automov.Loggers
             Console.ForegroundColor = color;
             Console.Write($"{type.ToString()}: ");
             Console.ResetColor();
-            Console.WriteLine(message);
+            Console.WriteLine(message + "\n");
         }
     }
 }
