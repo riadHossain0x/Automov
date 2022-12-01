@@ -63,51 +63,65 @@ namespace Automov
             Thread.Sleep(_delayTime);
         }
 
-        private string CheckElementValue(IValueSegment valueSegment)
+        private void CheckElementValue(IValueSegment valueSegment)
         {
-            if(string.IsNullOrEmpty(valueSegment.Value))
-                throw new Exceptions.NotFoundException(_logger, nameof(valueSegment.Value));
-
-            _logger.Write($"Checking given result '{valueSegment.Value}'", Enums.LogType.info);
-
-            var element = GetWebElement(valueSegment);
-
-            if (element.Text.Contains(valueSegment.Value))
+            try
             {
-                _logger.Write($"Given '{valueSegment.Value}' result found", Enums.LogType.Success);
-                return element.Text;
-            }
+                if (string.IsNullOrEmpty(valueSegment.Value))
+                    throw new Exceptions.NotFoundException(_logger, nameof(valueSegment.Value));
 
-            throw new Exceptions.NotFoundException(_logger, $"Given '{valueSegment.Value}' result not found! System returns - '{element.Text}'");
+                _logger.Write($"Checking given result '{valueSegment.Value}'", Enums.LogType.info);
+
+                var element = GetWebElement(valueSegment);
+
+                if (element.Text.Contains(valueSegment.Value))
+                {
+                    _logger.Write($"Given '{valueSegment.Value}' result found", Enums.LogType.Success);
+                    //return element.Text;
+                }
+
+                throw new Exceptions.NotFoundException(_logger, $"Given '{valueSegment.Value}' result not found! System returns - '{element.Text}'");
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void SetElementValue(IWebElement webElement, IValueSegment segment)
         {
-            if (string.IsNullOrEmpty(segment.Value))
-                throw new Exceptions.NotFoundException(_logger, nameof(segment.Value));
-
-            _logger.Write($"Set foot in '{segment.SelectorText}' element for value '{segment.Value}'", Enums.LogType.info);
-
-            switch (segment.InputType)
+            try
             {
-                case InputType.Textbox:
-                    webElement.SendKeys(segment.Value);
-                    break;
-                case InputType.Radiobutton:
-                    webElement.Click();
-                    break;
-                case InputType.Checkbox:
-                    webElement.Click();
-                    break;
-                case InputType.Dropdown:
-                    SelectElement dropDown = new SelectElement(webElement);
-                    dropDown.SelectByText(segment.Value);
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
+                if (string.IsNullOrEmpty(segment.Value))
+                    throw new Exceptions.NotFoundException(_logger, nameof(segment.Value));
 
-            Thread.Sleep(_delayTime);
+                _logger.Write($"Set foot in '{segment.SelectorText}' element for value '{segment.Value}'", Enums.LogType.info);
+
+                switch (segment.InputType)
+                {
+                    case InputType.Textbox:
+                        webElement.SendKeys(segment.Value);
+                        break;
+                    case InputType.Radiobutton:
+                        webElement.Click();
+                        break;
+                    case InputType.Checkbox:
+                        webElement.Click();
+                        break;
+                    case InputType.Dropdown:
+                        SelectElement dropDown = new SelectElement(webElement);
+                        dropDown.SelectByText(segment.Value);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+
+                Thread.Sleep(_delayTime);
+            }
+            catch (Exception ex)
+            {
+                _logger.Write($"Unable to set foot in '{segment.SelectorText}' element for value '{segment.Value}'", Enums.LogType.Error);
+            }
         }
 
         private IWebElement GetWebElement(ISegment segment)

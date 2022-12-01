@@ -4,6 +4,7 @@ using Automov.Interfaces;
 using Automov.Loggers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using Practice;
 
 
@@ -19,10 +20,10 @@ var loginValueSegment = new List<IValueSegment>()
 {
     new ValueSegment
     {
-        //SelectorType = SelectorType.Id,
+        SelectorType = SelectorType.Id,
         SelectorText = "Email",
         Value = "admin",
-        //InputType = InputType.Textbox
+        InputType = InputType.Textbox
     },
     new ValueSegment
     {
@@ -40,7 +41,7 @@ var loginActionSegment = new ActionSegment
     //{
     //    SelectorType = SelectorType.XPath,
     //    SelectorText = "//li[contains(text(),'Invalid login attempt.')]",
-    //    Value = "Invalid login", // aspected return value
+    //    Value = "Invalid login", // expected return value
     //    InputType = InputType.Label
     //}
 };
@@ -80,9 +81,10 @@ var stdValueSegment = new List<IValueSegment>()
     {
         SelectorType = SelectorType.XPath,
         SelectorText= "//select[@id='standardId']",
-        Value = "Nine",
+        Value = "Seven",
         InputType = InputType.Dropdown
-    },
+    }
+    ,
     new ValueSegment
     {
         SelectorText= "isScience",
