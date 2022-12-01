@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Automov.Interfaces
 {
-    public interface IActionSegment : ISegment
+    public interface ISegment
     {
-        
+        string? SelectorText { get; set; }
+        SelectorType SelectorType { get; set; }
     }
 }

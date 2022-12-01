@@ -3,6 +3,7 @@ using Automov.Exceptions;
 using Automov.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using System;
 
 namespace Automov
 {
@@ -22,31 +23,33 @@ namespace Automov
         public virtual bool DoBefore() => true;
         public virtual bool DoAfter() => true;
 
-        public void Operative(string navigateURL, List<IValueSegment> valueSegments)
+        public void Operative(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment)
         {
             Navigate(navigateURL);
 
-            DoBefore();
-
-            foreach (var segment in valueSegments)
+            foreach (var valueSegment in valueSegments)
             {
-                var element = GetWebElement(segment);
+                var element = GetWebElement(valueSegment);
 
-                SetElementValue(element, segment);
+                SetElementValue(element, valueSegment);
             }
 
-            DoAfter();
+            TakeOff(actionSegment);
         }
 
         public void TakeOff(IActionSegment actionSegment)
         {
-
+            var element = GetWebElement(actionSegment);
+            element.Click();
         }
 
         #region Helper
         private void Navigate(string url)
         {
-            _logger.Write($"Navigating - {url}", Enums.LogType.info);
+            if(string.IsNullOrEmpty(url))
+                throw new Exceptions.NotFoundException(_logger, nameof(url));
+
+            _logger.Write($"Navigate Url - {url}", Enums.LogType.info);
 
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
@@ -56,6 +59,9 @@ namespace Automov
 
         private void SetElementValue(IWebElement webElement, IValueSegment segment)
         {
+            if (string.IsNullOrEmpty(segment.Value))
+                throw new Exceptions.NotFoundException(_logger, nameof(segment.Value));
+
             _logger.Write($"Set foot in '{segment.SelectorText}' element for value '{segment.Value}'", Enums.LogType.info);
 
             switch (segment.InputType)
@@ -80,7 +86,7 @@ namespace Automov
             Thread.Sleep(_delayTime);
         }
 
-        private IWebElement GetWebElement(IValueSegment segment)
+        private IWebElement GetWebElement(ISegment segment)
         {
             IWebElement element = null!;
 

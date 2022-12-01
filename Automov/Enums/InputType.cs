@@ -5,6 +5,7 @@
         Textbox,
         Radiobutton,
         Checkbox,
-        Dropdown
+        Dropdown,
+        Label // for ActionSegment
     }
 }

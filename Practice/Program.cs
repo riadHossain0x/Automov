@@ -15,23 +15,37 @@ using Practice;
 IWebDriver webDriver = new ChromeDriver();
 ILogger logger = new ConsoleLogger();
 
-var list = new List<IValueSegment>()
+var valueSegment = new List<IValueSegment>()
 {
     new ValueSegment
     {
+        SelectorType = SelectorType.Id,
         SelectorText = "Email",
         Value = "admin",
-        InputType = InputType.Textbox,
-        SelectorType = SelectorType.Id
+        InputType = InputType.Textbox
     },
     new ValueSegment
     {
+        SelectorType = SelectorType.Id,
         SelectorText = "Password",
         Value = "riad",
-        InputType = InputType.Textbox,
-        SelectorType = SelectorType.Id
+        InputType = InputType.Textbox
     }
 };
 
+var actionSegment = new ActionSegment
+{
+    SelectorType = SelectorType.XPath,
+    SelectorText = "//button[@type='submit']",
+    Result = new ValueSegment
+    {
+        SelectorType = SelectorType.XPath,
+        SelectorText = "//li[contains(text(),'Invalid login attempt.')]",
+        Value = "Invalid login", // aspected return value
+        InputType = InputType.Label
+    }
+};
+
+
 var automov = new Aviator(webDriver, logger, 200);
-automov.Operative("http://localhost:5001/Account/Login", list);
+automov.Operative("http://localhost:5001/Account/Login", valueSegment, actionSegment);

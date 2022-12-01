@@ -2,11 +2,9 @@
 
 namespace Automov.Interfaces
 {
-    public interface IValueSegment
+    public interface IValueSegment : ISegment
     {
-        string? SelectorText { get; set; }
         string? Value { get; set; }
         InputType InputType { get; set; }
-        SelectorType SelectorType { get; set; }
     }
 }
