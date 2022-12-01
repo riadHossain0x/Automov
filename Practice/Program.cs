@@ -105,4 +105,6 @@ var stdActionSegment = new ActionSegment
     }
 };
 
-automov.Operative("http://localhost:5001/sm/Subject/CreateEdit", stdValueSegment, stdActionSegment);
+//automov.Operative("http://localhost:5001/sm/Subject/CreateEdit", stdValueSegment, stdActionSegment);
+
+automov.Operative("http://localhost:5001/sm/Exam/CreateEdit", stdValueSegment, stdActionSegment);

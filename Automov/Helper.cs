@@ -61,19 +61,18 @@ namespace Automov
             }
         }
 
-        public void SetElementValue(IWebElement webElement, IValueSegment segment)
+        public void SetElementValue(IWebElement webElement, InputType inputType, string value)
         {
             try
             {
-                if (string.IsNullOrEmpty(segment.Value))
-                    throw new Exceptions.NotFoundException(_logger, nameof(segment.Value));
+                if (string.IsNullOrEmpty(value))
+                    throw new Exceptions.NotFoundException(_logger, nameof(value));
 
-                _logger.Write($"Set foot in '{segment.SelectorText}' element for value '{segment.Value}'", Enums.LogType.info);
-
-                switch (segment.InputType)
+                switch (inputType)
                 {
                     case InputType.Textbox:
-                        webElement.SendKeys(segment.Value);
+                        if (string.IsNullOrWhiteSpace(value)) throw new Exceptions.NotFoundException(_logger, "There is no value found.");
+                        webElement.SendKeys(value);
                         break;
                     case InputType.Radiobutton:
                         webElement.Click();
@@ -82,8 +81,9 @@ namespace Automov
                         webElement.Click();
                         break;
                     case InputType.Dropdown:
+                        if (string.IsNullOrWhiteSpace(value)) throw new Exceptions.NotFoundException(_logger, "There is no value found.");
                         SelectElement dropDown = new SelectElement(webElement);
-                        dropDown.SelectByText(segment.Value);
+                        dropDown.SelectByText(value);
                         break;
                     default:
                         throw new NotImplementedException();
@@ -91,14 +91,17 @@ namespace Automov
 
                 Thread.Sleep(_delayTime);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.Write($"Unable to set foot in '{segment.SelectorText}' element for value '{segment.Value}'", Enums.LogType.Error);
+                throw;
             }
         }
 
         public IWebElement GetWebElement(ISegment segment)
         {
+            if (string.IsNullOrEmpty(segment.SelectorText))
+                throw new Exceptions.NotFoundException(_logger, "There is no selector found.");
+
             IWebElement element = null!;
 
             switch (segment.SelectorType)
@@ -136,9 +139,6 @@ namespace Automov
 
         private IWebElement IsElementPresent(By by, string? text)
         {
-            if (string.IsNullOrEmpty(text))
-                throw new Exceptions.NotFoundException(_logger, "element can not be null");
-
             _logger.Write($"Checking element '{text}'", Enums.LogType.info);
 
             IWebElement element = null!;

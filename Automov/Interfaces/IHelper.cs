@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using Automov.Enums;
+using OpenQA.Selenium;
 
 namespace Automov.Interfaces
 {
@@ -6,7 +7,7 @@ namespace Automov.Interfaces
     {
         void CheckElementValue(IValueSegment valueSegment);
         void Navigate(string url);
-        void SetElementValue(IWebElement webElement, IValueSegment segment);
+        void SetElementValue(IWebElement webElement, InputType inputType, string? value);
         IWebElement GetWebElement(ISegment segment);
     }
 }
