@@ -13,6 +13,8 @@ using Practice;
 IWebDriver webDriver = new ChromeDriver();
 ILogger logger = new ConsoleLogger();
 
+var automov = new Aviator(webDriver, logger, 200);
+
 var loginValueSegment = new List<IValueSegment>()
 {
     new ValueSegment
@@ -33,15 +35,72 @@ var loginActionSegment = new ActionSegment
 {
     SelectorType = SelectorType.XPath,
     SelectorText = "//button[@type='submit']",
-    Result = new ValueSegment
+    Result = null!
+    //Result = new ValueSegment
+    //{
+    //    SelectorType = SelectorType.XPath,
+    //    SelectorText = "//li[contains(text(),'Invalid login attempt.')]",
+    //    Value = "Invalid login", // aspected return value
+    //    InputType = InputType.Label
+    //}
+};
+
+automov.Operative("http://localhost:5001/Account/Login", loginValueSegment, loginActionSegment);
+
+var stdValueSegment = new List<IValueSegment>()
+{
+    new ValueSegment
+    {
+        //SelectorType = SelectorType.Id,
+        SelectorText = "Name",
+        Value = "Math",
+        //InputType = InputType.Textbox
+    },
+    new ValueSegment
+    {
+        SelectorText = "ShortName",
+        Value = "M",
+    },
+    new ValueSegment
+    {
+        SelectorText = "CommonName",
+        Value = "M-2002",
+    },
+    new ValueSegment
+    {
+        SelectorText = "CommonShortName",
+        Value = "Math-4",
+    },
+    new ValueSegment
+    {
+        SelectorText = "SubjectCode",
+        Value = "2002",
+    },
+    new ValueSegment // for dropdown field
     {
         SelectorType = SelectorType.XPath,
-        SelectorText = "//li[contains(text(),'Invalid login attempt.')]",
-        Value = "Invalid login", // aspected return value
+        SelectorText= "//select[@id='standardId']",
+        Value = "Nine",
+        InputType = InputType.Dropdown
+    },
+    new ValueSegment
+    {
+        SelectorText= "isScience",
+        Value = "true",
+        InputType = InputType.Checkbox
+    }
+};
+
+var stdActionSegment = new ActionSegment
+{
+    SelectorText = "btnSubmit",
+    Result = new ValueSegment
+    {
+        SelectorType = SelectorType.ClassName,
+        SelectorText = "alert",
+        Value = "successfull",
         InputType = InputType.Label
     }
 };
 
-
-var automov = new Aviator(webDriver, logger, 200);
-automov.Operative("http://localhost:5001/Account/Login", loginValueSegment, loginActionSegment);
+automov.Operative("http://localhost:5001/sm/Subject/CreateEdit", stdValueSegment, stdActionSegment);

@@ -45,7 +45,8 @@ namespace Automov
 
             element.Click();
 
-            CheckElementValue(actionSegment.Result);
+            if(actionSegment.Result != null)
+                CheckElementValue(actionSegment.Result);
         }
 
         #region Helper
@@ -100,7 +101,7 @@ namespace Automov
                     break;
                 case InputType.Dropdown:
                     SelectElement dropDown = new SelectElement(webElement);
-                    dropDown.SelectByValue(segment.Value);
+                    dropDown.SelectByText(segment.Value);
                     break;
                 default:
                     throw new NotImplementedException();
