@@ -50,6 +50,7 @@ namespace Automov
                 if (element.Text.Contains(valueSegment.Value))
                 {
                     _logger.Write($"Given '{valueSegment.Value}' result found", Enums.LogType.Success);
+                    return;
                     //return element.Text;
                 }
 
@@ -57,7 +58,7 @@ namespace Automov
             }
             catch (Exception)
             {
-
+                throw;
             }
         }
 
