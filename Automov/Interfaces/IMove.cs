@@ -5,7 +5,7 @@ namespace Automov.Interfaces
     /// <summary>
     /// 
     /// </summary>
-    public interface IAviator
+    public interface IMove
     {
         /// <summary>
         /// This method will perform single action according to given 'IActionSegment'.
@@ -19,13 +19,13 @@ namespace Automov.Interfaces
         ///     Result = new ValueSegment { } //Optional! When you have expected result.
         /// }
         /// 
-        /// _aviator.Operative(actionSegment);
+        /// _aviator.Next(actionSegment);
         /// </code>
         /// </example>
         /// </summary>
         /// <param name="actionSegment"></param>
         /// <returns></returns>
-        IWebElement Operative(IActionSegment actionSegment);
+        IWebElement Next(IActionSegment actionSegment);
 
         /// <summary>
         /// This method will perform multiple actions according to given list of 'IActionSegment'.
@@ -43,13 +43,13 @@ namespace Automov.Interfaces
         ///     more...
         /// }
         /// 
-        /// _aviator.Operative(actionSegmentList);
+        /// _aviator.Next(actionSegmentList);
         /// </code>
         /// </example>
         /// </summary>
         /// <param name="actionSegments"></param>
         /// <returns></returns>
-        IWebElement Operative(List<IActionSegment> actionSegments);
+        IWebElement Next(List<IActionSegment> actionSegments);
 
         /// <summary>
         /// This method will perform actions according to given url and list of 'IActionSegment'.
@@ -69,14 +69,14 @@ namespace Automov.Interfaces
         ///     more...
         /// }
         /// 
-        /// _aviator.Operative(url, actionSegmentList);
+        /// _aviator.Next(url, actionSegmentList);
         /// </code>
         /// </example>
         /// </summary>
         /// <param name="navigateURL"></param>
         /// <param name="actionSegments"></param>
         /// <returns></returns>
-        IWebElement Operative(string navigateURL, List<IActionSegment> actionSegments);
+        IWebElement Next(string navigateURL, List<IActionSegment> actionSegments);
 
         /// <summary>
         /// This method will insert values according to given list of 'IValueSegment'.
@@ -95,13 +95,13 @@ namespace Automov.Interfaces
         ///     more...
         /// }
         /// 
-        /// _aviator.Operative(valueSegmentList);
+        /// _aviator.Next(valueSegmentList);
         /// </code>
         /// </example>
         /// </summary>
         /// <param name="valueSegments"></param>
         /// <returns></returns>
-        IWebElement Operative(List<IValueSegment> valueSegments);
+        IWebElement Next(List<IValueSegment> valueSegments);
 
         /// <summary>
         /// This method will insert values according to given list of 'IValueSegment' and url.
@@ -122,14 +122,14 @@ namespace Automov.Interfaces
         ///     more...
         /// }
         /// 
-        /// _aviator.Operative(url, valueSegments);
+        /// _aviator.Next(url, valueSegments);
         /// </code>
         /// </example>
         /// </summary>
         /// <param name="navigateURL"></param>
         /// <param name="valueSegments"></param>
         /// <returns></returns>
-        IWebElement Operative(string navigateURL, List<IValueSegment> valueSegments);
+        IWebElement Next(string navigateURL, List<IValueSegment> valueSegments);
 
         /// <summary>
         /// This method will insert values and perform action in given url according to list of 'IValueSegment' and 'IActionSegment'.
@@ -157,7 +157,7 @@ namespace Automov.Interfaces
         ///     Result = new ValueSegment { } //Optional! When you have expected result.
         /// }
         /// 
-        /// _aviator.Operative(url, valueSegmentList, actionSegment);
+        /// _aviator.Next(url, valueSegmentList, actionSegment);
         /// </code>
         /// </example>
         /// </summary>
@@ -165,6 +165,6 @@ namespace Automov.Interfaces
         /// <param name="valueSegments"></param>
         /// <param name="actionSegment"></param>
         /// <returns></returns>
-        IWebElement Operative(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment);
+        IWebElement Next(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment);
     }
 }

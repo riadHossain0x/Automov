@@ -12,7 +12,7 @@ namespace UnitTestDemo
     {
         private IWebDriver _driver;
         private ILogger _logger;
-        private IAviator _aviator;
+        private Automov.Interfaces.IMove _aviator;
         private string _url = string.Empty;
 
         [SetUp]
@@ -20,7 +20,7 @@ namespace UnitTestDemo
         {
             _driver = new EdgeDriver();
             _logger = new ConsoleLogger();
-            _aviator = new Aviator(_driver, _logger, 300);
+            _aviator = new Automov.Move(_driver, _logger, 300);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace UnitTestDemo
 
 
             // Act
-            _aviator.Operative(_url, loginValueSegment, loginActionSegment);
+            _aviator.Next(_url, loginValueSegment, loginActionSegment);
 
         }
 
@@ -94,7 +94,7 @@ namespace UnitTestDemo
 
 
             // Act
-            _aviator.Operative(_url, loginValueSegment, loginActionSegment);
+            _aviator.Next(_url, loginValueSegment, loginActionSegment);
 
         }
     }

@@ -1,21 +1,16 @@
-﻿using Automov.Enums;
-using Automov.Exceptions;
-using Automov.Interfaces;
+﻿using Automov.Interfaces;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Automov
 {
-    public class Aviator : IAviator
+    public class Move : IMove
     {
         private readonly IWebDriver _driver = null!;
         private readonly ILogger _logger = null!;
         private readonly ICore _core = null!;
         private readonly int _delayTime;
 
-        public Aviator(IWebDriver driver, ILogger logger, int delayTime = 200)
+        public Move(IWebDriver driver, ILogger logger, int delayTime = 200)
         {
             _driver = driver;
             _logger = logger;
@@ -23,13 +18,13 @@ namespace Automov
             _core = new Core(_driver, _logger, _delayTime);
         }
 
-        public IWebElement Operative(IActionSegment actionSegment)
+        public IWebElement Next(IActionSegment actionSegment)
         {
             var webElement = Imitation(actionSegment);
             return webElement;
         }
 
-        public IWebElement Operative(List<IActionSegment> actionSegments)
+        public IWebElement Next(List<IActionSegment> actionSegments)
         {
             if (actionSegments == null)
                 throw new ArgumentNullException(nameof(actionSegments));
@@ -38,25 +33,25 @@ namespace Automov
 
             foreach (var action in actionSegments)
             {
-                webElement = Operative(action);
+                webElement = Next(action);
             }
 
             return webElement;
         }
 
-        public IWebElement Operative(string navigateURL, List<IActionSegment> actionSegments)
+        public IWebElement Next(string navigateURL, List<IActionSegment> actionSegments)
         {
             if (actionSegments == null)
                 throw new ArgumentNullException(nameof(actionSegments));
 
             _core.Navigate(navigateURL);
 
-            var webElement = Operative(actionSegments);
+            var webElement = Next(actionSegments);
 
             return webElement;
         }
 
-        public IWebElement Operative(List<IValueSegment> valueSegments)
+        public IWebElement Next(List<IValueSegment> valueSegments)
         {
             if (valueSegments == null)
                 throw new ArgumentNullException(nameof(valueSegments));
@@ -82,26 +77,26 @@ namespace Automov
             return webElement;
         }
 
-        public IWebElement Operative(string navigateURL, List<IValueSegment> valueSegments)
+        public IWebElement Next(string navigateURL, List<IValueSegment> valueSegments)
         {
             if (valueSegments == null)
                 throw new ArgumentNullException(nameof(valueSegments));
 
             _core.Navigate(navigateURL);
 
-            IWebElement webElement = Operative(valueSegments);
+            IWebElement webElement = Next(valueSegments);
 
             return webElement;
         }
 
-        public IWebElement Operative(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment)
+        public IWebElement Next(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment)
         {
             if (valueSegments == null || actionSegment == null)
                 throw new ArgumentNullException(nameof(valueSegments));
 
             _core.Navigate(navigateURL);
 
-            IWebElement webElement = Operative(valueSegments);
+            IWebElement webElement = Next(valueSegments);
 
             Imitation(actionSegment);
 

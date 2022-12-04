@@ -14,7 +14,7 @@ sp.ExecuteTest();
 IWebDriver webDriver = new ChromeDriver();
 ILogger logger = new ConsoleLogger();
 
-IAviator automov = new Aviator(webDriver, logger, 200);
+var automov = new Move(webDriver, logger, 200);
 
 var loginValueSegment = new List<IValueSegment>()
 {
