@@ -142,6 +142,13 @@ var examValueSegment = new List<IValueSegment>()
     }
 };
 
+automov.Next("http://localhost:5001/sm/Exam/CreateEdit", examValueSegment);
+
+var showDefaultAction = new ActionSegment
+{
+    SelectorText = "ShowHideDefaultControl"
+};
+
 var setMarkValueSegment = new List<IValueSegment>
 {
     new ValueSegment
@@ -161,11 +168,16 @@ var setMarkActionSegment = new ActionSegment
     IsMultiple = true
 };
 
-automov.Next("http://localhost:5001/sm/Exam/CreateEdit", examValueSegment);
-
-var showDefaultAction = new ActionSegment
+var checkSubValueSegment = new List<IValueSegment>()
 {
-    SelectorText = "ShowHideDefaultControl"
+    new ValueSegment
+    {
+        SelectorType = SelectorType.ClassName,
+        SelectorText = "IsSelected",
+        Value = "true",
+        InputType = InputType.Checkbox,
+        IsMultiple = true
+    }
 };
 
 var submitAction = new ActionSegment
@@ -174,13 +186,17 @@ var submitAction = new ActionSegment
     SelectorText = "btnSubmit",
     Result = new ValueSegment
     {
-
+        //SelectorType = SelectorType.ClassName,
+        //SelectorText = "alert",
+        //InputType = InputType.Label,
+        //Value = "successfull"
     }
 };
 
 automov.Next(showDefaultAction);
 automov.Next(setMarkValueSegment);
 automov.Next(setMarkActionSegment);
+automov.Next(checkSubValueSegment);
 
 
-//automov.Operative(submitAction);
+automov.Next(submitAction);

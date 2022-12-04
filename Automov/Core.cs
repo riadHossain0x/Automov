@@ -42,19 +42,17 @@ namespace Automov
             try
             {
                 if (string.IsNullOrEmpty(valueSegment.Value))
-                    throw new Exceptions.NotFoundException(_logger, nameof(valueSegment.Value));
+                    throw new Exceptions.NotFoundException(_logger, "Given value not found!");
 
                 _logger.Write($"Checking given result '{valueSegment.Value}'", Enums.LogType.info);
+
                 var element = GetWebElement(valueSegment);
 
-                if (element.Text.Contains(valueSegment.Value))
-                {
-                    _logger.Write($"Given '{valueSegment.Value}' result found!", Enums.LogType.Success);
-                    return;
-                    //return element.Text;
-                }
+                if (!element.Text.Contains(valueSegment.Value))
+                    throw new Exceptions.NotFoundException(_logger, $"Given '{valueSegment.Value}' result not found. " +
+                        $"System returns - '{element.Text}'");
 
-                throw new Exceptions.NotFoundException(_logger, $"Given '{valueSegment.Value}' result not found. System returns - '{element.Text}'");
+                _logger.Write($"Given '{valueSegment.Value}' result found!", Enums.LogType.Success);
             }
             catch (Exception)
             {
@@ -179,8 +177,6 @@ namespace Automov
             {
                 yield return element;
             }
-
-            //return webElements;
         }
 
         private IWebElement IsElementPresent(By by, string? text)
