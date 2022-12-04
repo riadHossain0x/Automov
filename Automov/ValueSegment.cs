@@ -9,5 +9,6 @@ namespace Automov
         public string? SelectorText { get; set; }
         public string? Value { get; set; }
         public InputType InputType { get; set; }
+        public bool IsMultiple { get; set; }
     }
 }

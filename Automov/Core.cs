@@ -103,56 +103,118 @@ namespace Automov
             if (string.IsNullOrEmpty(segment.SelectorText))
                 throw new Exceptions.NotFoundException(_logger, "There is no selector found.");
 
-            IWebElement element = null!;
+            IWebElement webElement = null!;
 
             switch (segment.SelectorType)
             {
                 case SelectorType.Id:
-                    element = IsElementPresent(By.Id(segment.SelectorText), segment.SelectorText);
+                    webElement = IsElementPresent(By.Id(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.LinkText:
-                    element = IsElementPresent(By.LinkText(segment.SelectorText), segment.SelectorText);
+                    webElement = IsElementPresent(By.LinkText(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.Name:
-                    element = IsElementPresent(By.Name(segment.SelectorText), segment.SelectorText);
+                    webElement = IsElementPresent(By.Name(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.XPath:
-                    element = IsElementPresent(By.XPath(segment.SelectorText), segment.SelectorText);
+                    webElement = IsElementPresent(By.XPath(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.ClassName:
-                    element = IsElementPresent(By.ClassName(segment.SelectorText), segment.SelectorText);
+                    webElement = IsElementPresent(By.ClassName(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.PartialLinkText:
-                    element = IsElementPresent(By.PartialLinkText(segment.SelectorText), segment.SelectorText);
+                    webElement = IsElementPresent(By.PartialLinkText(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.TagName:
-                    element = IsElementPresent(By.TagName(segment.SelectorText), segment.SelectorText);
+                    webElement = IsElementPresent(By.TagName(segment.SelectorText), segment.SelectorText);
                     break;
                 case SelectorType.CssSelector:
-                    element = IsElementPresent(By.CssSelector(segment.SelectorText), segment.SelectorText);
+                    webElement = IsElementPresent(By.CssSelector(segment.SelectorText), segment.SelectorText);
                     break;
                 default:
                     throw new NotImplementedException();
             }
 
-            return element;
+            return webElement;
+        }
+
+        public IEnumerable<IWebElement> GetWebElements(ISegment segment)
+        {
+            if (string.IsNullOrEmpty(segment.SelectorText))
+                throw new Exceptions.NotFoundException(_logger, "There is no selector found.");
+
+            IReadOnlyCollection<IWebElement> webElements = null!;
+
+            switch (segment.SelectorType)
+            {
+                case SelectorType.Id:
+                    webElements = IsElementsPresent(By.Id(segment.SelectorText), segment.SelectorText);
+                    break;
+                case SelectorType.LinkText:
+                    webElements = IsElementsPresent(By.LinkText(segment.SelectorText), segment.SelectorText);
+                    break;
+                case SelectorType.Name:
+                    webElements = IsElementsPresent(By.Name(segment.SelectorText), segment.SelectorText);
+                    break;
+                case SelectorType.XPath:
+                    webElements = IsElementsPresent(By.XPath(segment.SelectorText), segment.SelectorText);
+                    break;
+                case SelectorType.ClassName:
+                    webElements = IsElementsPresent(By.ClassName(segment.SelectorText), segment.SelectorText);
+                    break;
+                case SelectorType.PartialLinkText:
+                    webElements = IsElementsPresent(By.PartialLinkText(segment.SelectorText), segment.SelectorText);
+                    break;
+                case SelectorType.TagName:
+                    webElements = IsElementsPresent(By.TagName(segment.SelectorText), segment.SelectorText);
+                    break;
+                case SelectorType.CssSelector:
+                    webElements = IsElementsPresent(By.CssSelector(segment.SelectorText), segment.SelectorText);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            foreach (var element in webElements)
+            {
+                yield return element;
+            }
+
+            //return webElements;
         }
 
         private IWebElement IsElementPresent(By by, string? text)
         {
             _logger.Write($"Checking element '{text}'", Enums.LogType.info);
 
-            IWebElement element = null!;
+            IWebElement webElement = null!;
 
             if (ValueObject.IsElementPresent(_driver, by))
             {
-                element = _driver.FindElement(by);
+                webElement = _driver.FindElement(by);
             }
             else
                 throw new ElementNotFoundException(_logger, $"'{text}' element not found");
 
             Thread.Sleep(_delayTime);
-            return element;
+            return webElement;
+        }
+
+        private IReadOnlyCollection<IWebElement> IsElementsPresent(By by, string? text)
+        {
+            _logger.Write($"Checking element '{text}'", Enums.LogType.info);
+
+            IReadOnlyCollection<IWebElement> webElements = null!;
+
+            if (ValueObject.IsElementPresent(_driver, by))
+            {
+                webElements = _driver.FindElements(by);
+            }
+            else
+                throw new ElementNotFoundException(_logger, $"'{text}' element not found");
+
+            Thread.Sleep(_delayTime);
+            return webElements;
         }
     }
 }

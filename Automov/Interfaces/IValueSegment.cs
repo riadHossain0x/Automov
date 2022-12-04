@@ -6,5 +6,6 @@ namespace Automov.Interfaces
     {
         string? Value { get; set; }
         InputType InputType { get; set; }
+        bool IsMultiple { get; set; }
     }
 }

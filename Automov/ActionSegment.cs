@@ -12,12 +12,7 @@ namespace Automov
     {
         public string? SelectorText { get; set; }
         public SelectorType SelectorType { get; set; }
+        public bool IsMultiple { get; set; }
         public IValueSegment Result { get; set; } = null!;
     }
-
-    //public class Result
-    //{
-    //    public IValueSegment? ValueSegment { get; set; }
-    //    //public string? Text { get; set; }
-    //}
 }

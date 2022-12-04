@@ -60,17 +60,20 @@ namespace Automov
 
             foreach (var valueSegment in valueSegments)
             {
-                webElement = _core.GetWebElement(valueSegment);
-
-                try
+                if (valueSegment.IsMultiple)
                 {
-                    _logger.Write($"Set foot in '{valueSegment.SelectorText}' element for value '{valueSegment.Value}'", Enums.LogType.info);
+                    foreach (var element in _core.GetWebElements(valueSegment))
+                    {
+                        webElement = element;
 
-                    _core.SetElementValue(webElement, valueSegment.InputType, valueSegment.Value);
+                        SetValue(webElement, valueSegment);
+                    }
                 }
-                catch (Exception)
+                else
                 {
-                    _logger.Write($"Unable to set foot in '{valueSegment.SelectorText}' element for value '{valueSegment.Value}'", Enums.LogType.Error);
+                    webElement = _core.GetWebElement(valueSegment);
+
+                    SetValue(webElement, valueSegment);
                 }
             }
 
@@ -103,18 +106,50 @@ namespace Automov
             return webElement;
         }
 
+        private void SetValue(IWebElement webElement, IValueSegment valueSegment)
+        {
+            try
+            {
+                _logger.Write($"Set foot in '{valueSegment.SelectorText}' element for value '{valueSegment.Value}'", Enums.LogType.info);
+
+                _core.SetElementValue(webElement, valueSegment.InputType, valueSegment.Value);
+            }
+            catch (Exception)
+            {
+                _logger.Write($"Unable to set foot in '{valueSegment.SelectorText}' element for value '{valueSegment.Value}'", Enums.LogType.Error);
+            }
+        }
+
         private IWebElement Imitation(IActionSegment actionSegment)
         {
-            var element = _core.GetWebElement(actionSegment);
+            IWebElement webElement = null!;
 
+            if(actionSegment.IsMultiple)
+            {
+                foreach (var element in _core.GetWebElements(actionSegment))
+                {
+                    webElement = element;
+
+                    ImitationAction(webElement, actionSegment);
+                }
+            }else
+            {
+                webElement = _core.GetWebElement(actionSegment);
+
+                ImitationAction(webElement, actionSegment);
+            }
+
+            return webElement;
+        }
+
+        private void ImitationAction(IWebElement webElement, IActionSegment actionSegment)
+        {
             _logger.Write($"Executing action on '{actionSegment.SelectorText}'", Enums.LogType.info);
 
-            element.Click();
+            webElement.Click();
 
             if (actionSegment.Result != null)
                 _core.CheckElementValue(actionSegment.Result);
-
-            return element;
         }
 
     }

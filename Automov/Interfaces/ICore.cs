@@ -9,5 +9,6 @@ namespace Automov.Interfaces
         void Navigate(string url);
         void SetElementValue(IWebElement webElement, InputType inputType, string? value);
         IWebElement GetWebElement(ISegment segment);
+        IEnumerable<IWebElement> GetWebElements(ISegment segment);
     }
 }

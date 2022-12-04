@@ -9,6 +9,7 @@ namespace Automov.Interfaces
 {
     public interface IActionSegment : ISegment
     {
+        bool IsMultiple { get; set; }
         IValueSegment Result { get; set; }
     }
 }

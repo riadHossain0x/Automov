@@ -8,8 +8,8 @@ using OpenQA.Selenium.Firefox;
 using Practice;
 
 
-var sp = new Sample();
-sp.ExecuteTest();
+//var sp = new Sample();
+//sp.ExecuteTest();
 
 IWebDriver webDriver = new ChromeDriver();
 ILogger logger = new ConsoleLogger();
@@ -38,7 +38,7 @@ var loginActionSegment = new ActionSegment
     SelectorText = "//button[@type='submit']",
 };
 
-//automov.Operative("http://localhost:5001/Account/Login", loginValueSegment, loginActionSegment);
+automov.Next("http://localhost:5001/Account/Login", loginValueSegment, loginActionSegment);
 
 var stdValueSegment = new List<IValueSegment>()
 {
@@ -149,17 +149,19 @@ var setMarkValueSegment = new List<IValueSegment>
         SelectorType = SelectorType.ClassName,
         SelectorText = "DefaultValue",
         InputType = InputType.Textbox,
-        Value = "100"
+        Value = "100",
+        IsMultiple = true,
     }
 };
 
 var setMarkActionSegment = new ActionSegment
 {
     SelectorType = SelectorType.ClassName,
-    SelectorText = "DefaultValue"
+    SelectorText = "DefaultValue",
+    IsMultiple = true
 };
 
-//automov.Operative("http://localhost:5001/sm/Exam/CreateEdit", examValueSegment);
+automov.Next("http://localhost:5001/sm/Exam/CreateEdit", examValueSegment);
 
 var showDefaultAction = new ActionSegment
 {
@@ -172,13 +174,13 @@ var submitAction = new ActionSegment
     SelectorText = "btnSubmit",
     Result = new ValueSegment
     {
-        
+
     }
 };
 
-//automov.Operative(showDefaultAction);
-//automov.Operative(setMarkValueSegment);
-//automov.Operative(setMarkActionSegment);
+automov.Next(showDefaultAction);
+automov.Next(setMarkValueSegment);
+automov.Next(setMarkActionSegment);
 
 
 //automov.Operative(submitAction);
