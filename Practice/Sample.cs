@@ -23,6 +23,7 @@ namespace Practice
             Print(300, "Username value is entered.\n");
 
             ele = driver.FindElement(By.Id("Password"));
+            var eles = driver.FindElements(By.Id("Password"));
             ele.SendKeys(pass);
 
             Print(300, "Password is entered.\n");
@@ -183,11 +184,11 @@ namespace Practice
 
             Login_Operative(userName, password);
 
-            Class_Operative(className);
+            //Class_Operative(className);
 
-            Section_Operative(className, section);
+            //Section_Operative(className, section);
 
-            Subject_Operative("Data Structure and Algorithm", "DSA", "DSA-101", "DSA-101", "101", "Nine");
+            //Subject_Operative("Data Structure and Algorithm", "DSA", "DSA-101", "DSA-101", "101", "Nine");
         }
 
         public void EndTest()

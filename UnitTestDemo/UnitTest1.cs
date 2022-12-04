@@ -67,7 +67,7 @@ namespace UnitTestDemo
             {
                 new ValueSegment
                 {
-                    SelectorType = SelectorType.Id,
+                    SelectorType = SelectorType.ClassName,
                     SelectorText = "Email",
                     Value = "admin",
                     InputType = InputType.Textbox
@@ -75,7 +75,7 @@ namespace UnitTestDemo
                 new ValueSegment
                 {
                     SelectorText = "Password",
-                    Value = "riada",
+                    Value = "riad",
                 }
             };
 
