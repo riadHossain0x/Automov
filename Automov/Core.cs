@@ -49,12 +49,12 @@ namespace Automov
 
                 if (element.Text.Contains(valueSegment.Value))
                 {
-                    _logger.Write($"Given '{valueSegment.Value}' result found", Enums.LogType.Success);
+                    _logger.Write($"Given '{valueSegment.Value}' result found!", Enums.LogType.Success);
                     return;
                     //return element.Text;
                 }
 
-                throw new Exceptions.NotFoundException(_logger, $"Given '{valueSegment.Value}' result not found! System returns - '{element.Text}'");
+                throw new Exceptions.NotFoundException(_logger, $"Given '{valueSegment.Value}' result not found. System returns - '{element.Text}'");
             }
             catch (Exception)
             {

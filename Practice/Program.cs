@@ -36,14 +36,6 @@ var loginActionSegment = new ActionSegment
 {
     SelectorType = SelectorType.XPath,
     SelectorText = "//button[@type='submit']",
-    Result = null!
-    //Result = new ValueSegment
-    //{
-    //    SelectorType = SelectorType.XPath,
-    //    SelectorText = "//li[contains(text(),'Invalid login attempt.')]",
-    //    Value = "Invalid login", // expected return value
-    //    InputType = InputType.Label
-    //}
 };
 
 automov.Operative("http://localhost:5001/Account/Login", loginValueSegment, loginActionSegment);

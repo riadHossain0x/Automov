@@ -24,7 +24,41 @@ namespace UnitTestDemo
         }
 
         [Test]
-        public void Test1()
+        public void LoginPage_ValidLoginAttempt_ReturnsLoggedIn()
+        {
+            // Arrange
+            _url = "http://localhost:5001/Login";
+
+            var loginValueSegment = new List<IValueSegment>()
+            {
+                new ValueSegment
+                {
+                    SelectorType = SelectorType.Id,
+                    SelectorText = "Email",
+                    Value = "admin",
+                    InputType = InputType.Textbox
+                },
+                new ValueSegment
+                {
+                    SelectorText = "Password",
+                    Value = "riad",
+                }
+            };
+
+            var loginActionSegment = new ActionSegment
+            {
+                SelectorType = SelectorType.XPath,
+                SelectorText = "//button[@type='submit']"
+            };
+
+
+            // Act
+            _aviator.Operative(_url, loginValueSegment, loginActionSegment);
+
+        }
+
+        [Test]
+        public void LoginPage_InvalidLoginAttempt_ReturnsInvalid()
         {
             // Arrange
             _url = "http://localhost:5001/Login";
