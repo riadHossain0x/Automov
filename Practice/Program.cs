@@ -38,8 +38,6 @@ var loginActionSegment = new ActionSegment
     SelectorText = "//button[@type='submit']",
 };
 
-automov.Next("http://localhost:5001/Account/Login", loginValueSegment, loginActionSegment);
-
 var stdValueSegment = new List<IValueSegment>()
 {
     new ValueSegment
@@ -97,8 +95,6 @@ var stdActionSegment = new ActionSegment
     }
 };
 
-//automov.Operative("http://localhost:5001/sm/Subject/CreateEdit", stdValueSegment, stdActionSegment);
-
 var examValueSegment = new List<IValueSegment>()
 {
     new ValueSegment
@@ -142,8 +138,6 @@ var examValueSegment = new List<IValueSegment>()
     }
 };
 
-automov.Next("http://localhost:5001/sm/Exam/CreateEdit", examValueSegment);
-
 var showDefaultAction = new ActionSegment
 {
     SelectorText = "ShowHideDefaultControl"
@@ -186,17 +180,18 @@ var submitAction = new ActionSegment
     SelectorText = "btnSubmit",
     Result = new ValueSegment
     {
-        //SelectorType = SelectorType.ClassName,
-        //SelectorText = "alert",
-        //InputType = InputType.Label,
-        //Value = "successfull"
+        SelectorType = SelectorType.ClassName,
+        SelectorText = "alert",
+        InputType = InputType.Label,
+        Value = "successfull"
     }
 };
 
-automov.Next(showDefaultAction);
-automov.Next(setMarkValueSegment);
-automov.Next(setMarkActionSegment);
-automov.Next(checkSubValueSegment);
-
-
-automov.Next(submitAction);
+automov.Next("http://localhost:5001/Account/Login", loginValueSegment, loginActionSegment)
+    .Next("http://localhost:5001/sm/Subject/CreateEdit", stdValueSegment, stdActionSegment)
+    .Next("http://localhost:5001/sm/Exam/CreateEdit", examValueSegment)
+    .Next(showDefaultAction)
+    .Next(setMarkValueSegment)
+    .Next(setMarkActionSegment)
+    .Next(checkSubValueSegment)
+    .Next(submitAction);

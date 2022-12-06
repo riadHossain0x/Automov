@@ -18,40 +18,38 @@ namespace Automov
             _core = new Core(_driver, _logger, _delayTime);
         }
 
-        public IWebElement Next(IActionSegment actionSegment)
+        public IMove Next(IActionSegment actionSegment)
         {
-            var webElement = Imitation(actionSegment);
-            return webElement;
+            Imitation(actionSegment);
+            return this;
         }
 
-        public IWebElement Next(List<IActionSegment> actionSegments)
+        public IMove Next(List<IActionSegment> actionSegments)
         {
             if (actionSegments == null)
                 throw new ArgumentNullException(nameof(actionSegments));
 
-            IWebElement webElement = null!;
-
             foreach (var action in actionSegments)
             {
-                webElement = Next(action);
+                _ = Next(action);
             }
 
-            return webElement;
+            return this;
         }
 
-        public IWebElement Next(string navigateURL, List<IActionSegment> actionSegments)
+        public IMove Next(string navigateURL, List<IActionSegment> actionSegments)
         {
             if (actionSegments == null)
                 throw new ArgumentNullException(nameof(actionSegments));
 
             _core.Navigate(navigateURL);
 
-            var webElement = Next(actionSegments);
+            _ = Next(actionSegments);
 
-            return webElement;
+            return this;
         }
 
-        public IWebElement Next(List<IValueSegment> valueSegments)
+        public IMove Next(List<IValueSegment> valueSegments)
         {
             if (valueSegments == null)
                 throw new ArgumentNullException(nameof(valueSegments));
@@ -77,33 +75,33 @@ namespace Automov
                 }
             }
 
-            return webElement;
+            return this;
         }
 
-        public IWebElement Next(string navigateURL, List<IValueSegment> valueSegments)
+        public IMove Next(string navigateURL, List<IValueSegment> valueSegments)
         {
             if (valueSegments == null)
                 throw new ArgumentNullException(nameof(valueSegments));
 
             _core.Navigate(navigateURL);
 
-            IWebElement webElement = Next(valueSegments);
+            _ = Next(valueSegments);
 
-            return webElement;
+            return this;
         }
 
-        public IWebElement Next(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment)
+        public IMove Next(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment)
         {
             if (valueSegments == null || actionSegment == null)
                 throw new ArgumentNullException(nameof(valueSegments));
 
             _core.Navigate(navigateURL);
 
-            IWebElement webElement = Next(valueSegments);
+            _ = Next(valueSegments);
 
             Imitation(actionSegment);
 
-            return webElement;
+            return this;
         }
 
         private void SetValue(IWebElement webElement, IValueSegment valueSegment)

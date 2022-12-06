@@ -25,7 +25,7 @@ namespace Automov.Interfaces
         /// </summary>
         /// <param name="actionSegment"></param>
         /// <returns></returns>
-        IWebElement Next(IActionSegment actionSegment);
+        IMove Next(IActionSegment actionSegment);
 
         /// <summary>
         /// This method will perform multiple actions according to given list of 'IActionSegment'.
@@ -49,7 +49,7 @@ namespace Automov.Interfaces
         /// </summary>
         /// <param name="actionSegments"></param>
         /// <returns></returns>
-        IWebElement Next(List<IActionSegment> actionSegments);
+        IMove Next(List<IActionSegment> actionSegments);
 
         /// <summary>
         /// This method will perform actions according to given url and list of 'IActionSegment'.
@@ -76,7 +76,7 @@ namespace Automov.Interfaces
         /// <param name="navigateURL"></param>
         /// <param name="actionSegments"></param>
         /// <returns></returns>
-        IWebElement Next(string navigateURL, List<IActionSegment> actionSegments);
+        IMove Next(string navigateURL, List<IActionSegment> actionSegments);
 
         /// <summary>
         /// This method will insert values according to given list of 'IValueSegment'.
@@ -101,7 +101,7 @@ namespace Automov.Interfaces
         /// </summary>
         /// <param name="valueSegments"></param>
         /// <returns></returns>
-        IWebElement Next(List<IValueSegment> valueSegments);
+        IMove Next(List<IValueSegment> valueSegments);
 
         /// <summary>
         /// This method will insert values according to given list of 'IValueSegment' and url.
@@ -129,7 +129,7 @@ namespace Automov.Interfaces
         /// <param name="navigateURL"></param>
         /// <param name="valueSegments"></param>
         /// <returns></returns>
-        IWebElement Next(string navigateURL, List<IValueSegment> valueSegments);
+        IMove Next(string navigateURL, List<IValueSegment> valueSegments);
 
         /// <summary>
         /// This method will insert values and perform action in given url according to list of 'IValueSegment' and 'IActionSegment'.
@@ -165,6 +165,6 @@ namespace Automov.Interfaces
         /// <param name="valueSegments"></param>
         /// <param name="actionSegment"></param>
         /// <returns></returns>
-        IWebElement Next(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment);
+        IMove Next(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment);
     }
 }
