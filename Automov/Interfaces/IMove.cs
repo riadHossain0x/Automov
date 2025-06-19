@@ -3,7 +3,7 @@
 namespace Automov.Interfaces
 {
     /// <summary>
-    /// 
+    /// Defines methods to automate page navigation, element interaction, and value verification.
     /// </summary>
     public interface IMove
     {
