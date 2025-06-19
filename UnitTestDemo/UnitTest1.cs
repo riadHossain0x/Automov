@@ -23,6 +23,12 @@ namespace UnitTestDemo
             _aviator = new Automov.Move(_driver, _logger, 300);
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            _driver.Quit();
+        }
+
         [Test]
         public void LoginPage_ValidLoginAttempt_ReturnsLoggedIn()
         {
@@ -54,6 +60,11 @@ namespace UnitTestDemo
 
             // Act
             _aviator.Next(_url, loginValueSegment, loginActionSegment);
+
+            // Assert
+            Assert.That(_driver.Url, Is.Not.EqualTo(_url), "User should be redirected after successful login.");
+            Assert.That(_driver.FindElements(By.ClassName("validation-summary-errors")).Count, Is.EqualTo(0),
+                "Validation errors were displayed on successful login.");
 
         }
 
@@ -95,6 +106,11 @@ namespace UnitTestDemo
 
             // Act
             _aviator.Next(_url, loginValueSegment, loginActionSegment);
+
+            // Assert
+            Assert.That(_driver.Url, Is.EqualTo(_url), "User should remain on the login page after invalid attempt.");
+            var error = _driver.FindElement(By.XPath("//li[contains(text(),'Invalid login attempt.')]"));
+            Assert.That(error.Text, Does.Contain("Invalid login"), "Invalid login message was not displayed.");
 
         }
     }
