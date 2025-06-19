@@ -92,8 +92,11 @@ namespace Automov
 
         public IMove Next(string navigateURL, List<IValueSegment> valueSegments, IActionSegment actionSegment)
         {
-            if (valueSegments == null || actionSegment == null)
+            if (valueSegments == null)
                 throw new ArgumentNullException(nameof(valueSegments));
+
+            if (actionSegment == null)
+                throw new ArgumentNullException(nameof(actionSegment));
 
             _core.Navigate(navigateURL);
 
