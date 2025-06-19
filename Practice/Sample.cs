@@ -64,7 +64,7 @@ namespace Practice
 
             Print(100, "Checking is data saved or not!\n");
 
-            if (!ele.Text.Contains("successfull"))
+            if (!ele.Text.Contains("successful"))
                 throw new InvalidOperationException($"Failed to saved data. Return message - '{ele.Text}'");
 
             Print(400, "Data successfully saved.\n");
@@ -100,7 +100,7 @@ namespace Practice
 
             Print(100, "Checking is data saved or not!\n");
 
-            if (!ele.Text.Contains("successfull"))
+            if (!ele.Text.Contains("successful"))
                 throw new InvalidOperationException($"Failed to saved data. Return message - '{ele.Text}'");
 
             Print(400, "Data successfully saved.\n");
@@ -157,7 +157,7 @@ namespace Practice
 
             Print(100, "Checking is data saved or not!\n");
 
-            if (!ele.Text.Contains("successfull"))
+            if (!ele.Text.Contains("successful"))
                 throw new InvalidOperationException($"Failed to saved data. Return message - '{ele.Text}'");
 
             Print(400, "Data successfully saved.\n");
