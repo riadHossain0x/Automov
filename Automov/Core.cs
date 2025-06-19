@@ -64,13 +64,11 @@ namespace Automov
         {
             try
             {
-                if (string.IsNullOrEmpty(value))
-                    throw new Exceptions.NotFoundException(_logger, nameof(value));
-
                 switch (inputType)
                 {
                     case InputType.Textbox:
-                        if (string.IsNullOrWhiteSpace(value)) throw new Exceptions.NotFoundException(_logger, "There is no value found.");
+                        if (string.IsNullOrWhiteSpace(value))
+                            throw new Exceptions.NotFoundException(_logger, "There is no value found.");
                         webElement.SendKeys(value);
                         break;
                     case InputType.Radiobutton:
@@ -80,7 +78,8 @@ namespace Automov
                         webElement.Click();
                         break;
                     case InputType.Dropdown:
-                        if (string.IsNullOrWhiteSpace(value)) throw new Exceptions.NotFoundException(_logger, "There is no value found.");
+                        if (string.IsNullOrWhiteSpace(value))
+                            throw new Exceptions.NotFoundException(_logger, "There is no value found.");
                         SelectElement dropDown = new SelectElement(webElement);
                         dropDown.SelectByText(value);
                         break;
