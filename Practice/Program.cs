@@ -90,7 +90,7 @@ var stdActionSegment = new ActionSegment
     {
         SelectorType = SelectorType.ClassName,
         SelectorText = "alert",
-        Value = "successfull",
+        Value = "successful",
         InputType = InputType.Label
     }
 };
@@ -183,7 +183,7 @@ var submitAction = new ActionSegment
         SelectorType = SelectorType.ClassName,
         SelectorText = "alert",
         InputType = InputType.Label,
-        Value = "successfull"
+        Value = "successful"
     }
 };
 
